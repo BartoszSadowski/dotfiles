@@ -50,6 +50,16 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 -- ##################################################
+-- #####          GENERAL AUTOCOMMANDS          #####
+-- ##################################################
+
+-- Highlight when yanking (copying) text
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function() vim.hl.on_yank() end,
+  desc = "Briefly highlight yanked text"
+})
+
+-- ##################################################
 -- #####              FILE TYPES                #####
 -- ##################################################
 
@@ -63,7 +73,7 @@ vim.filetype.add {
 }
 
 -- ##################################################
--- #####         GENERAL KEYMAPS                #####
+-- #####            GENERAL KEYMAPS             #####
 -- ##################################################
 
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -95,12 +105,22 @@ end, { desc = '[B]uffer [F]ilename [R]ead' })
 vim.keymap.set('n', '<leader>bl', ':e<CR>', { desc = '[B]uffer [L]oad' })
 
 -- ##################################################
--- #####          GENERAL AUTOCOMMANDS          #####
+-- #####                 PLUGINS                #####
 -- ##################################################
 
--- Highlight when yanking (copying) text
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function() vim.hl.on_yank() end,
-  desc = "Briefly highlight yanked text"
-})
+local gh = function(x) return 'https://github.com/' .. x end
+
+-- **************************************************
+-- *****               COLORSCHEME              *****
+-- **************************************************
+
+vim.pack.add({gh('catppuccin/nvim')})
+
+require('catppuccin').setup {}
+
+-- vim.opt.termguicolors = true
+vim.cmd.colorscheme 'catppuccin-frappe'
+
+-- Configure highlights
+vim.cmd.hi 'Comment gui=none'
 
