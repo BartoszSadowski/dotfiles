@@ -111,6 +111,36 @@ vim.keymap.set('n', '<leader>bl', ':e<CR>', { desc = '[B]uffer [L]oad' })
 local gh = function(x) return 'https://github.com/' .. x end
 
 -- ##################################################
+-- #####                UTILITY                 #####
+-- ##################################################
+
+vim.pack.add { gh 'folke/snacks.nvim' }
+local Snacks = require 'snacks'
+
+vim.pack.add { gh 'echasnovski/mini.nvim' }
+
+-- **************************************************
+-- *****               AUTOPAIRS                *****
+-- **************************************************
+
+require('mini.pairs').setup()
+
+-- **************************************************
+-- *****             TEXT OBJECTS               *****
+-- **************************************************
+
+-- Examples:
+--  - va)  - [V]isually select [A]round [)]paren
+--  - yinq - [Y]ank [I]nside [N]ext [Q]uote
+--  - ci'  - [C]hange [I]nside [']quote
+require('mini.ai').setup { n_lines = 500 }
+
+-- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
+-- - sd'   - [S]urround [D]elete [']quotes
+-- - sr)'  - [S]urround [R]eplace [)] [']
+require('mini.surround').setup()
+
+-- ##################################################
 -- #####                 VISUALS                #####
 -- ##################################################
 
@@ -127,6 +157,13 @@ vim.cmd.colorscheme 'catppuccin-frappe'
 
 -- Configure highlights
 vim.cmd.hi 'Comment gui=none'
+
+-- **************************************************
+-- *****               STATUSLINE               *****
+-- **************************************************
+
+local statusline = require 'mini.statusline'
+statusline.setup { use_icons = vim.g.have_nerd_font }
 
 -- ##################################################
 -- #####                 TOOLS                  #####
@@ -204,10 +241,7 @@ vim.keymap.set('n', '<leader>e', ':Explore<CR>', { desc = 'Open file [e]xplorer'
 -- *****             FUZZY FINDER               *****
 -- **************************************************
 
-vim.pack.add { gh 'folke/snacks.nvim' }
-
 -- Setup snacks picker
-local Snacks = require 'snacks'
 Snacks.picker.setup {}
 
 -- Exact picker configs
@@ -230,18 +264,6 @@ vim.keymap.set('n', '<leader>sf', function() Snacks.picker.files { excludes = { 
 vim.keymap.set('n', '<leader>sg', function() Snacks.picker.grep() end, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sr', function() Snacks.picker.resume() end, { desc = '[S]earch [R]esume' })
 vim.keymap.set('n', '<leader>sc', function() Snacks.picker.git_status() end, { desc = '[S]earch through [C]hanges' })
-
--- ##################################################
--- #####                UTILITY                 #####
--- ##################################################
-
--- **************************************************
--- *****               AUTOPAIRS                *****
--- **************************************************
-
-vim.pack.add { gh 'windwp/nvim-autopairs' }
-
-require('nvim-autopairs').setup()
 
 -- ##################################################
 -- #####               LANGUAGES                #####
