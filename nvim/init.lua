@@ -125,6 +125,21 @@ vim.cmd.colorscheme 'catppuccin-frappe'
 vim.cmd.hi 'Comment gui=none'
 
 -- **************************************************
+-- *****              AUTOCOMPLETE              *****
+-- **************************************************
+
+-- Snippets
+vim.pack.add { gh 'rafamadriz/friendly-snippets' }
+
+-- Completion engine
+vim.pack.add { {
+  src = gh 'saghen/blink.cmp',
+  version = 'v1',
+} }
+
+require('blink.cmp').setup()
+
+-- **************************************************
 -- *****                   LSP                  *****
 -- **************************************************
 
