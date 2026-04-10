@@ -92,9 +92,6 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- Handle file explorer
-vim.keymap.set('n', '<leader>e', ':Explore<CR>', { desc = 'Open file [e]xplorer' })
-
 -- Register handling
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>y', '"+y', { silent = true, desc = '[Y]ank to clipboard' })
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>p', '"+p', { silent = true, desc = '[P]aste from clipboard' })
@@ -197,6 +194,44 @@ require('gitsigns').setup {
 }
 
 -- ##################################################
+-- #####              NAVIGATION                #####
+-- ##################################################
+
+-- Handle file explorer
+vim.keymap.set('n', '<leader>e', ':Explore<CR>', { desc = 'Open file [e]xplorer' })
+
+-- **************************************************
+-- *****             FUZZY FINDER               *****
+-- **************************************************
+
+vim.pack.add { gh 'folke/snacks.nvim' }
+
+-- Setup snacks picker
+local Snacks = require 'snacks'
+Snacks.picker.setup {}
+
+-- Exact picker configs
+local bufferPicker = function()
+  Snacks.picker.buffers {
+    win = {
+      input = {
+        keys = {
+          ['<C-d>'] = { 'bufdelete', mode = { 'n', 'i' } },
+        },
+      },
+      list = { keys = { ['dd'] = 'bufdelete' } },
+    },
+  }
+end
+
+-- Setup keymaps
+vim.keymap.set('n', '<leader><leader>', bufferPicker, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>sf', function() Snacks.picker.files { excludes = { 'dist', 'build' } } end, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>sg', function() Snacks.picker.grep() end, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sr', function() Snacks.picker.resume() end, { desc = '[S]earch [R]esume' })
+vim.keymap.set('n', '<leader>sc', function() Snacks.picker.git_status() end, { desc = '[S]earch through [C]hanges' })
+
+-- ##################################################
 -- #####                UTILITY                 #####
 -- ##################################################
 
@@ -211,7 +246,7 @@ require('nvim-autopairs').setup()
 -- ##################################################
 -- #####               LANGUAGES                #####
 -- ##################################################
---
+
 -- **************************************************
 -- *****               TREESITTER               *****
 -- **************************************************
@@ -307,11 +342,10 @@ vim.api.nvim_create_user_command('LspInfo', 'checkhealth vim.lsp', {})
 
 vim.lsp.config('*', {
   on_attach = function(client, bufnr)
-    print 'attached'
+    print 'lsp attached'
     -- Navigation
-    -- Enable once telescope is installed
-    -- vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, { desc = '[G]oto [D]efinition' })
-    -- vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, { desc = '[G]oto [R]eferences' })
+    vim.keymap.set('n', 'gd', function() Snacks.picker.lsp_definitions() end, { desc = '[G]oto [D]efinition' })
+    vim.keymap.set('n', 'gr', function() Snacks.picker.lsp_references() end, { desc = '[G]oto [R]eferences' })
 
     -- Actions
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
