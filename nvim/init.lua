@@ -288,3 +288,15 @@ require('gitsigns').setup {
     map('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
   end,
 }
+
+-- ##################################################
+-- #####                UTILITY                 #####
+-- ##################################################
+
+-- **************************************************
+-- *****               AUTOPAIRS                *****
+-- **************************************************
+
+vim.pack.add { gh 'windwp/nvim-autopairs' }
+
+require('nvim-autopairs').setup()
