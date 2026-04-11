@@ -140,6 +140,18 @@ require('mini.ai').setup { n_lines = 500 }
 -- - sr)'  - [S]urround [R]eplace [)] [']
 require('mini.surround').setup()
 
+-- **************************************************
+-- *****               KEY MAPS                 *****
+-- **************************************************
+
+vim.pack.add { gh 'folke/which-key.nvim' }
+
+local whichKey = require 'which-key'
+whichKey.setup()
+
+-- Document previous behaviours
+whichKey.add { { '<leader>b', group = '[B]uffer' }, { '<leader>bf', group = '[B]uffer [F]ile' } }
+
 -- ##################################################
 -- #####                 VISUALS                #####
 -- ##################################################
@@ -230,6 +242,11 @@ require('gitsigns').setup {
   end,
 }
 
+whichKey.add { {
+  { '<leader>g', group = '[G]it Hunk', mode = { 'n', 'v' } },
+  { '<leader>t', group = '[T]oggle' },
+} }
+
 -- ##################################################
 -- #####              NAVIGATION                #####
 -- ##################################################
@@ -264,6 +281,10 @@ vim.keymap.set('n', '<leader>sf', function() Snacks.picker.files { excludes = { 
 vim.keymap.set('n', '<leader>sg', function() Snacks.picker.grep() end, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sr', function() Snacks.picker.resume() end, { desc = '[S]earch [R]esume' })
 vim.keymap.set('n', '<leader>sc', function() Snacks.picker.git_status() end, { desc = '[S]earch through [C]hanges' })
+
+whichKey.add {
+  { '<leader>s', group = '[S]earch' },
+}
 
 -- ##################################################
 -- #####               LANGUAGES                #####
@@ -376,6 +397,11 @@ vim.lsp.config('*', {
     client.server_capabilities.semnticTokensProvider = vim.NIL
   end,
 })
+
+whichKey.add {
+  { '<leader>c', group = '[C]ode' },
+  { '<leader>r', group = '[R]ename' },
+}
 
 -- Map servers to exes and enable
 local lsp_servers = {
