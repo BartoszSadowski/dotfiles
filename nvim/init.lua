@@ -107,6 +107,23 @@ vim.keymap.set('n', '<leader>bl', ':e<CR>', { desc = '[B]uffer [L]oad' })
 
 local gh = function(x) return 'https://github.com/' .. x end
 
+-- **************************************************
+-- *****             PLUGIN MANAGEMENT          *****
+-- **************************************************
+
+vim.keymap.set('n', '<leader>vu', function() vim.pack.update() end, { desc = '[v]impack [u]pdate - code action to skip some' })
+
+vim.keymap.set(
+  'n',
+  '<leader>vr',
+  function() vim.pack.update(nil, { target = 'lockfile', force = true }) end,
+  { desc = '[v]impack [r]eset to lockfile versions' }
+)
+
+vim.keymap.set('n', '<leader>vi', function() vim.pack.update(nil, { offline = true }) end, { desc = '[v]impack [i]nfo' })
+
+-- to delete plugin after removing from config files: `:lua vim.pack.del({ 'nameOfPlugin', ... })`
+
 -- ##################################################
 -- #####                UTILITY                 #####
 -- ##################################################
@@ -147,7 +164,7 @@ local whichKey = require 'which-key'
 whichKey.setup()
 
 -- Document previous behaviours
-whichKey.add { { '<leader>b', group = '[B]uffer' }, { '<leader>bf', group = '[B]uffer [F]ile' } }
+whichKey.add { { '<leader>b', group = '[B]uffer' }, { '<leader>bf', group = '[B]uffer [F]ile' }, { '<leader>v', group = '[v]implig' } }
 
 -- ##################################################
 -- #####                 VISUALS                #####
