@@ -82,9 +82,6 @@ vim.filetype.add {
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [q]uickfix list' })
-
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
@@ -253,6 +250,43 @@ whichKey.add { {
   { '<leader>g', group = '[G]it Hunk', mode = { 'n', 'v' } },
   { '<leader>t', group = '[T]oggle' },
 } }
+
+-- **************************************************
+-- *****              DIAGNOSTICS               *****
+-- **************************************************
+--
+vim.pack.add { gh 'rachartier/tiny-inline-diagnostic.nvim' }
+local tinyDiagnostic = require 'tiny-inline-diagnostic'
+
+vim.diagnostic.config { virtual_text = false }
+tinyDiagnostic.setup {
+  preset = 'powerline',
+  multiple_diag_under_cursor = true,
+}
+
+-- Diagnostic keymaps
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [q]uickfix list' })
+
+vim.keymap.set('n', '<leader>tda', function()
+  vim.diagnostic.config { virtual_text = true }
+  tinyDiagnostic.disable()
+end, { desc = '[T]oggle [D]iagnostic [A]ll' })
+
+vim.keymap.set('n', '<leader>tdt', function()
+  vim.diagnostic.config { virtual_text = false }
+  tinyDiagnostic.enable()
+end, { desc = '[T]oggle [D]iagnostic [T]iny' })
+
+vim.keymap.set('n', '<leader>tdn', function()
+  vim.diagnostic.config { virtual_text = false }
+  tinyDiagnostic.disable()
+end, { desc = '[T]oggle [D]iagnostic [N]one' })
+
+vim.keymap.set('n', '<leader>tdf', function() vim.diagnostic.open_float() end, { desc = '[T]oggle [D]iagnostic [F]loat' })
+
+whichKey.add {
+  { '<leader>td', group = '[T]oggle [D]iagnostic' },
+}
 
 -- ##################################################
 -- #####              NAVIGATION                #####
