@@ -177,6 +177,13 @@ vim.cmd.hi 'Comment gui=none'
 local statusline = require 'mini.statusline'
 statusline.setup { use_icons = vim.g.have_nerd_font }
 
+-- **************************************************
+-- *****               INDENTLINE               *****
+-- **************************************************
+
+vim.pack.add { gh 'lukas-reineke/indent-blankline.nvim' }
+require('ibl').setup()
+
 -- ##################################################
 -- #####                 TOOLS                  #####
 -- ##################################################
