@@ -501,6 +501,13 @@ require('conform').setup {
   end,
   formatters_by_ft = {
     lua = { 'stylua' },
-    javascript = { 'prettierd', 'prettier', stop_after_first = true },
+    javascript = { 'prettier' },
+    javascriptreact = { 'prettier' },
+    typescript = { 'prettier' },
+    typescriptreact = { 'prettier' },
+    json = { 'prettier' },
+    html = { 'prettier' },
+    css = { 'prettier' },
+    markdown = { 'prettier' },
   },
 }
