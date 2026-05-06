@@ -14,4 +14,16 @@ return {
   cmd = { 'cucumber-language-server', '--stdio' },
   filetypes = { 'cucumber' },
   root_markers = { '.git' },
+  settings = {
+    cucumber = {
+      features = { '**/*.feature' },
+      glue = {
+        'node_modules/**/step_definitions/**/*.js',
+        'node_modules/**/step_definitions/**/*.ts',
+        '**/step-definitions/**/*.js',
+        '**/step-definitions/**/*.ts',
+        '**/steps/**/*.java',
+      },
+    },
+  },
 }
